@@ -1,0 +1,20 @@
+# perf/artillery-config.yml
+config:
+  target: 'https://api.openweathermap.org'
+  phases:
+    - duration: 60
+      arrivalRate: 10
+    - duration: 120
+      arrivalRate: 50
+  defaults:
+    headers:
+      Content-Type: 'application/json'
+
+scenarios:
+  - name: "Weather API Load Test"
+    flow:
+      - get:
+          url: "/data/2.5/weather"
+          qs:
+            q: "London"
+            appid: "{{ $processEnv.OPENWEATHER_API_KEY }}"

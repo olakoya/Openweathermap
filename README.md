@@ -75,10 +75,10 @@ npm install
 Create a `.env` file in the root directory:
 
 ```env
-OPENWEATHER_API_KEY=your_api_key_here
+OPENWEATHER_API_KEY6c56beaa584b27613820fcd4f1de63ed
 OPENWEATHER_BASE_URL=https://api.openweathermap.org/data/2.5
 TEST_TIMEOUT=30000
-ENABLE_DETAILED_LOGGING=false
+ENABLE_DETAILED_LOGGING=true
 ```
 
 > **Note**: Get your free API key from [OpenWeatherMap](https://openweathermap.org/api)
