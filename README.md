@@ -43,6 +43,9 @@ src/                      # API service and helper scripts
         ├── logger.ts
         └── test-helpers.ts
 
+
+screenshots               # Manual or automated test screenshots
+test-results              # Automated test reports (Jest, JUnit, HTML, Artillery)
 .env                      # Environment variables
 README.md                 # Documentation
 package.json              # Dependencies and scripts
