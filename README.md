@@ -45,7 +45,6 @@ src/                      # API service and helper scripts
 
 
 screenshots               # Manual or automated test screenshots
-test-results              # Automated test reports (Jest, JUnit, HTML, Artillery)
 .env                      # Environment variables
 README.md                 # Documentation
 package.json              # Dependencies and scripts
