@@ -1,9 +1,5 @@
-# Load Test for OpenWeatherMap API
 config:
-  target: "{{ $env.OPENWEATHER_BASE_URL }}"
-  phases:
-    - duration: 60       # run for 60 seconds
-      arrivalRate: 5     # 5 virtual users per second
+  target: "{{ $env.OPENWEATHER_BASE_URL }}" 
   defaults:
     headers:
       Content-Type: "application/json"

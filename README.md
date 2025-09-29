@@ -1,394 +1,199 @@
 # OpenWeatherMap API Test Automation Framework
 
-A comprehensive TypeScript-based test automation framework for the OpenWeatherMap API, featuring extensive test coverage, CI/CD integration, and professional reporting.
+A professional test automation framework for OpenWeatherMap API, designed for robust backend QA validation. Includes functional, integration, and performance tests, environment configuration, and reporting.
 
-## 🌟 Features
+---
 
-- **Comprehensive API Testing**: Current weather and forecast endpoints
-- **Multiple Test Types**: Happy path, unhappy path, edge cases, performance, and integration tests
-- **TypeScript**: Fully typed codebase with strict type checking
-- **Professional Architecture**: Service layer, utilities, and reusable components
-- **CI/CD Integration**: GitHub Actions workflow with multi-node testing
-- **Rich Reporting**: HTML and JUnit reports with coverage analysis
-- **Error Handling**: Robust error handling and validation
-- **Performance Testing**: Response time validation and concurrent request testing
+## Overview
 
-## 📋 Test Coverage
+This project demonstrates:
 
-### Current Weather API Tests
-- ✅ Get weather by city name
-- ✅ Get weather by city name with country code
-- ✅ Get weather by coordinates
-- ✅ Get weather with different units (metric/imperial)
-- ✅ Multiple cities testing
-- ✅ Temperature range validation
-- ❌ Invalid city names
-- ❌ Invalid coordinates
-- ❌ Invalid city IDs
-- ❌ Empty parameters
-- ❌ Malformed country codes
-- 🔄 Edge cases (boundary coordinates, special characters)
+- Comprehensive API testing of OpenWeatherMap endpoints (Current Weather, Forecast)
+- Automated load and spike testing using Artillery
+- Configuration-driven testing with `.env` support
+- Clear reporting for CI/CD integration
+- Reusable and maintainable test architecture
 
-### Forecast API Tests
-- ✅ 5-day forecast by city name
-- ✅ Forecast by coordinates
-- ✅ Time interval validation
-- ✅ Different units testing
-- ❌ Invalid city for forecast
-- ❌ Invalid coordinates for forecast
-- ❌ Empty parameters
-- 🔍 Data structure validation
+---
 
-### Performance Tests
-- ⚡ Response time validation
-- ⚡ Concurrent requests handling
-- ⚡ Multiple API calls without degradation
+## Features
 
-### Integration Tests
-- 🔗 Current weather + forecast consistency
-- 🔗 Different methods same location
-- 🔗 Data consistency across requests
+- **Functional Tests**: Validations for happy path, edge cases, and negative scenarios  
+- **Integration Tests**: Consistency between endpoints and response validations  
+- **Performance Tests**: Load and spike testing with Artillery  
+- **Environment Configurable**: `.env` file for API keys and base URL  
+- **Reporting**: Console output, HTML, and JUnit reports for CI pipelines  
+- **Clean Architecture**: Service layer, reusable utilities, and structured test files  
 
-## 🛠️ Prerequisites
+---
 
-- **Node.js**: Version 18.x or 20.x
-- **npm**: Version 8+
-- **OpenWeatherMap API Key**: Free registration at [OpenWeatherMap](https://openweathermap.org/api)
+## Project Structure
 
-## 🚀 Quick Start
+*perf/ # Performance test files (Artillery)*
+api-load-test.yml
+api-spike-test.yml
+api-smoke-test.yml
 
-### 1. Clone the Repository
+*src/ # API service and helper scripts*
+services/
+weather-service.ts
+utils/
+api-client.ts
+logger.ts
+
+*.env # Environment variables*
+README.md # Project documentation
+package.json # Node.js dependencies and scripts
+
+
+---
+
+## Prerequisites
+
+- Node.js v18.x or higher  
+- npm v8+  
+- OpenWeatherMap API key (free registration at [OpenWeatherMap](https://openweathermap.org/api))  
+
+---
+
+## Setup
+
+1. Clone the repository:
 
 ```bash
 git clone <repository-url>
 cd openweathermap-api-tests
-```
 
-### 2. Install Dependencies
+> 2. Install dependencies:
 
-```bash
 npm install
-```
 
-### 3. Configuration
+> 3. Create a .env file in the root:
 
-Create a `.env` file in the root directory:
-
-```env
-OPENWEATHER_API_KEY6c56beaa584b27613820fcd4f1de63ed
+OPENWEATHER_API_KEY=your_api_key_here
 OPENWEATHER_BASE_URL=https://api.openweathermap.org/data/2.5
 TEST_TIMEOUT=30000
 ENABLE_DETAILED_LOGGING=true
-```
 
-> **Note**: Get your free API key from [OpenWeatherMap](https://openweathermap.org/api)
+----
 
-### 4. Run Tests
+**  Running Tests **
+Functional & Integration Tests (Jest + TypeScript)**
 
-```bash
-# Run all tests
 npm test
+npm run test:coverage    # With coverage reports
+npm run test:ci          # For CI/CD pipelines
 
-# Run with coverage
-npm run test:coverage
+> ** Performance Tests (Artillery) **
 
-# Run in watch mode
-npm run test:watch
+npx dotenv -e .env -- npx artillery run perf/api-load-test.yml
+npx dotenv -e .env -- npx artillery run perf/api-spike-test.yml
+npx dotenv -e .env -- npx artillery run perf/api-smoke-test.yml
 
-# Run CI mode (for pipelines)
-npm run test:ci
-```
+----
+>
+** Reporting **
 
-## 📊 Test Reports
+HTML Reports: ./test-results/test-report.html
 
-### HTML Report
-After running tests, open `./test-results/test-report.html` in your browser for a detailed interactive report.
+Coverage Reports: ./coverage/lcov-report/index.html
 
-### Coverage Report
-Coverage reports are generated in `./coverage/lcov-report/index.html`
-
-### JUnit XML
-JUnit XML reports are available at `./test-results/junit.xml` for CI/CD integration.
-
-## 🏗️ Project Structure
-
-```
-src/
-├── __tests__/              # Test files
-│   ├── weather-api.test.ts  # Current weather tests
-│   ├── forecast-api.test.ts # Forecast tests
-│   ├── performance.test.ts  # Performance tests
-│   └── integration.test.ts  # Integration tests
-├── config/                  # Configuration
-│   └── test-config.ts      # Test configuration
-├── services/               # Service layer
-│   └── weather-service.ts  # Weather API service
-├── types/                  # TypeScript types
-│   └── weather-types.ts    # API response types
-├── utils/                  # Utilities
-│   ├── api-client.ts       # HTTP client wrapper
-│   ├── logger.ts           # Test logger
-│   └── test-helpers.ts     # Test utilities
-└── test-setup.ts           # Global test setup
-```
-
-## 🔄 CI/CD Integration
-
-### GitHub Actions
-
-The project includes a complete GitHub Actions workflow (`.github/workflows/ci.yml`) that:
-
-- Runs tests on multiple Node.js versions (18.x, 20.x)
-- Executes linting and tests
-- Generates and uploads test reports
-- Runs performance tests separately
-- Uploads coverage to Codecov
-- Triggers on push, PR, and daily schedule
-
-### Setup Instructions
-
-1. **Add Repository Secrets**:
-   - `OPENWEATHER_API_KEY`: Your OpenWeatherMap API key
-
-2. **Enable GitHub Actions**:
-   - Push to `main` or `develop` branch
-   - Create a pull request
-   - Manual workflow dispatch
-
-### Pipeline Stages
-
-1. **Build & Lint**: Code quality checks
-2. **Test**: Comprehensive test execution
-3. **Performance**: Dedicated performance testing
-4. **Report**: Artifact upload and coverage reporting
-
-## 🧪 Test Scenarios
-
-### Happy Path Tests
-- Valid API requests with expected responses
-- Different parameter combinations
-- Multiple data formats and units
-- Successful data retrieval and validation
-
-### Unhappy Path Tests
-- Invalid parameters and inputs
-- Non-existent locations
-- Malformed requests
-- Error response validation
-
-### Edge Cases
-- Boundary coordinates (poles, date line)
-- Special characters in city names
-- Extremely long input strings
-- Rate limiting scenarios
-
-### Performance Tests
-- Response time validation (< 5 seconds)
-- Concurrent request handling
-- Multiple sequential requests
-- Resource usage optimization
-
-## 🔧 Common Commands
-
-```bash
-# Development
-npm run build          # Compile TypeScript
-npm run lint           # Run ESLint
-npm run lint:fix       # Fix linting issues
-npm run clean          # Clean build artifacts
-
-# Testing
-npm test              # Run all tests
-npm run test:coverage # Run with coverage
-npm run test:watch    # Watch mode
-npm run test:ci       # CI mode with reports
-```
-
-## 📚 API Documentation
-
-### WeatherService Methods
-
-```typescript
-// Current weather
-getCurrentWeatherByCity(city: string, country?: string, units?: string)
-getCurrentWeatherByCoordinates(lat: number, lon: number, units?: string)
-getCurrentWeatherByCityId(id: number, units?: string)
-
-// Forecast
-getForecastByCity(city: string, country?: string, units?: string)
-getForecastByCoordinates(lat: number, lon: number, units?: string)
-```
-
-### Supported Units
-- `metric`: Celsius, meters/sec, hectopascals
-- `imperial`: Fahrenheit, miles/hour, hectopascals
-- `standard`: Kelvin, meters/sec, hectopascals (default)
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **API Key Missing**
-   ```
-   Error: OPENWEATHER_API_KEY environment variable is required
-   ```
-   Solution: Add your API key to `.env` file
-
-2. **Rate Limiting**
-   ```
-   Error: 429 Too Many Requests
-   ```
-   Solution: Add delays between requests or upgrade API plan
-
-3. **Network Timeouts**
-   ```
-   Error: timeout of 30000ms exceeded
-   ```
-   Solution: Increase `TEST_TIMEOUT` in `.env` file
-
-4. **Invalid Location**
-   ```
-   Error: 404 city not found
-   ```
-   Solution: Check city name spelling and country code
-
-## 📈 Performance Considerations
-
-- **Rate Limits**: Free tier allows 60 calls/minute
-- **Response Times**: Typically < 2 seconds
-- **Concurrent Requests**: Limited by rate limits
-- **Best Practices**: Implement delays between requests
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 📞 Support
-
-For issues and questions:
-- Create an issue in the repository
-- Check the troubleshooting section
-- Review OpenWeatherMap API documentation
+JUnit XML Reports: ./test-results/junit.xml (for CI/CD)
 
 ---
 
-## 🎯 Answers to Technical Test Questions
+** Test Scenarios **
 
-### 1. Time Spent and Potential Additions
+Functional Tests
 
-**Time Spent**: This comprehensive test suite represents approximately 6-8 hours of development time.
+PASS Get current weather by city name, coordinates, and city ID
 
-**Additional Features with More Time**:
-- **Advanced Mocking**: Mock server implementation for offline testing
-- **Data-Driven Tests**: CSV/JSON test data files for parameterized testing
-- **Visual Regression**: Screenshots and visual comparisons for weather maps
-- **Load Testing**: Artillery.js or K6 integration for stress testing
-- **Monitoring**: Real-time API health monitoring and alerting
-- **Multi-Environment**: Staging, production environment configurations
-- **Database Integration**: Test result persistence and historical analysis
-- **Advanced Reporting**: Dashboard with trends and analytics
-- **Security Testing**: API key rotation and security vulnerability scanning
-- **Contract Testing**: Pact.js for API contract validation
+PASS Validate response data types and temperature ranges
 
-### 2. Self Description in JSON
+FAIL Handle invalid cities, coordinates, and parameters
 
-```json
-{
-  "name": "OpenWeatherMap Test Automation Framework",
-  "type": "QA Automation Suite",
-  "version": "1.0.0",
-  "technologies": [
-    "TypeScript",
-    "Jest",
-    "Node.js",
-    "GitHub Actions",
-    "Axios"
-  ],
-  "capabilities": {
-    "testing": {
-      "types": ["unit", "integration", "performance", "API"],
-      "coverage": "comprehensive",
-      "reporting": ["HTML", "JUnit", "Coverage"],
-      "automation": true
-    },
-    "architecture": {
-      "pattern": "service-layer",
-      "principles": ["DRY", "SOLID", "clean-code"],
-      "scalability": "high",
-      "maintainability": "excellent"
-    },
-    "ci_cd": {
-      "platforms": ["GitHub Actions"],
-      "features": ["multi-node", "artifacts", "coverage"],
-      "scheduling": "daily"
-    }
-  },
-  "strengths": [
-    "comprehensive test coverage",
-    "professional code organization",
-    "robust error handling",
-    "detailed documentation",
-    "CI/CD integration",
-    "performance testing"
-  ],
-  "metrics": {
-    "test_files": 4,
-    "test_cases": "50+",
-    "code_coverage": "high",
-    "documentation": "extensive"
-  }
-}
-```
+- Edge cases (boundary coordinates, special characters)
 
-### 3. Performance Testing Approach
+Forecast API
 
-**Strategy for Performance Testing**:
+PASS 5-day forecast by city or coordinates
 
-1. **Load Testing**
-   - **Tool**: Artillery.js or K6
-   - **Metrics**: Response time, throughput, error rates
-   - **Scenarios**: Gradual load increase, spike testing, sustained load
-   - **Implementation**:
-   ```yaml
-   # artillery-config.yml
-   config:
-     target: 'https://api.openweathermap.org'
-     phases:
-       - duration: 60
-         arrivalRate: 10
-       - duration: 120
-         arrivalRate: 50
-   scenarios:
-     - name: "Weather API Load Test"
-       requests:
-         - get:
-             url: "/data/2.5/weather?q=London&appid={{ $env.API_KEY }}"
-   ```
+PASS Validate time intervals and units
 
-2. **Performance Benchmarks**
-   - **Response Time**: < 2 seconds (95th percentile)
-   - **Availability**: > 99.5% uptime
-   - **Throughput**: Handle rate limit efficiently
-   - **Error Rate**: < 0.1% for valid requests
+FAIL Invalid inputs handled gracefully
 
-3. **Monitoring Setup**
-   - **Real-time Dashboards**: Grafana with InfluxDB
-   - **Alerting**: Slack/email notifications for SLA breaches
-   - **Historical Analysis**: Performance trend analysis
-   - **Synthetic Monitoring**: Regular health checks
+Performance Tests
 
-4. **Test Environment**
-   - **Isolated Testing**: Separate API keys for performance tests
-   - **Data Preparation**: Pre-validated test datasets
-   - **Resource Monitoring**: CPU, memory, network utilization
-   - **Baseline Establishment**: Performance regression detection
+⚡ Load and spike testing
 
-This framework provides a solid foundation for comprehensive API testing with professional-grade features and industry best practices.
+⚡ Validate response time (< 2s)
+
+⚡ Monitor errors and throughput
+
+Integration Tests
+
+🔗 Compare current weather vs forecast consistency
+
+🔗 Multiple methods same location validations
+
+---
+
+** CI/CD Integration **
+
+GitHub Actions workflow included (.github/workflows/ci.yml)
+
+Multi-node testing for Node.js 18 & 20
+
+Linting, tests, performance tests, and artifact reporting
+
+Requires repository secret: OPENWEATHER_API_KEY
+
+---
+
+** Troubleshooting **
+
+Invalid API Key / Missing Env Variable: Ensure .env has OPENWEATHER_API_KEY
+
+Rate Limiting (HTTP 429): Reduce requests or upgrade plan
+
+Invalid Location (HTTP 404): Verify city name and country code
+
+Timeouts: Increase TEST_TIMEOUT in .env
+
+---
+
+** Performance Considerations **
+
+Free-tier rate limit: 60 requests/min
+
+Typical response: < 2s
+
+Concurrent requests limited by rate limits
+
+---
+
+** Contributing **
+
+Fork the repository
+
+Add/modify tests or utilities
+
+Submit a pull request after validation
+
+---
+
+** License **
+
+MIT License
+
+
+
+** Summary for Application **
+
+Role: Backend QA Engineer
+
+Skills Demonstrated: API testing, load testing, TypeScript automation, CI/CD integration, environment management, robust reporting
+
+Project Deliverables: Functional, integration, performance tests; configurable environment; clean architecture; professional reports
+
+Author: OLA KOYA

@@ -1,18 +1,21 @@
-export class TestLogger {
-  static info(message: string): void {
-    console.log(`[INFO] ${new Date().toISOString()} - ${message}`);
-  }
+const LOG_LEVELS = ['debug', 'info', 'warn', 'error'] as const;
+type LogLevel = typeof LOG_LEVELS[number];
 
-  static error(message: string, error?: any): void {
-    console.error(`[ERROR] ${new Date().toISOString()} - ${message}`);
-    if (error) {
-      console.error(error);
-    }
-  }
+const CURRENT_LEVEL = (process.env.LOG_LEVEL && LOG_LEVELS.includes(process.env.LOG_LEVEL as LogLevel)
+  ? process.env.LOG_LEVEL
+  : 'info') as LogLevel;
 
-  static debug(message: string): void {
-    if (process.env.ENABLE_DETAILED_LOGGING === 'true') {
-      console.log(`[DEBUG] ${new Date().toISOString()} - ${message}`);
-    }
+function log(level: LogLevel, message: string, error?: any) {
+  if (LOG_LEVELS.indexOf(level) >= LOG_LEVELS.indexOf(CURRENT_LEVEL)) {
+    const prefix = `[${level.toUpperCase()}] ${new Date().toISOString()} -`;
+    if (error) console.error(prefix, message, error);
+    else console.log(prefix, message);
   }
 }
+
+export const TestLogger = {
+  debug: (msg: string) => log('debug', msg),
+  info: (msg: string) => log('info', msg),
+  warn: (msg: string) => log('warn', msg),
+  error: (msg: string, err?: any) => log('error', msg, err),
+};

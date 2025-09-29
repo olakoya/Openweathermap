@@ -1,3 +1,10 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
+export const API_KEY = process.env.OPENWEATHER_API_KEY;
+export const LOG_LEVEL = process.env.LOG_LEVEL || 'info';
+
+
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',

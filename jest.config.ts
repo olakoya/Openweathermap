@@ -5,9 +5,9 @@ const config: Config = {
   testEnvironment: 'node',               // Run tests in Node.js
   roots: ['<rootDir>/src', '<rootDir>/tests'], // Look for tests in both src/ and tests/
   testMatch: [
-    '**/__tests__/**/*.ts', 
-    '**/?(*.)+(spec|test).ts'
-  ],
+  '**/*.test.ts',
+  '**/*.spec.ts'
+],
   transform: {
     '^.+\\.ts$': 'ts-jest',              // Compile TypeScript files
   },

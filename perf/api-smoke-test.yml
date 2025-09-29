@@ -1,9 +1,6 @@
-# Load Test for OpenWeatherMap API
+# Smoke Test for OpenWeatherMap API
 config:
   target: "{{ $env.OPENWEATHER_BASE_URL }}"
-  phases:
-    - duration: 60       # run for 60 seconds
-      arrivalRate: 5     # 5 virtual users per second
   defaults:
     headers:
       Content-Type: "application/json"
@@ -11,10 +8,20 @@ config:
     API_KEY: "{{ $env.OPENWEATHER_BASE_URL }}"
 
 scenarios:
-  - name: "Weather API Load Test"
+  - name: "Weather API Smoke Test"
     flow:
       - get:
           url: "/weather"
           qs:
             q: "London"
+            appid: "{{ API_KEY }}"
+      - get:
+          url: "/weather"
+          qs:
+            q: "New York"
+            appid: "{{ API_KEY }}"
+      - get:
+          url: "/weather"
+          qs:
+            q: "Tokyo"
             appid: "{{ API_KEY }}"

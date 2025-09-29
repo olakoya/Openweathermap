@@ -1,0 +1,24 @@
+# Spike Test for OpenWeatherMap API
+config:
+  target: "{{ $env.OPENWEATHER_BASE_URL }}"
+  phases:
+    - duration: 10       # warm-up period
+      arrivalRate: 1
+    - duration: 20       # spike period
+      arrivalRate: 50
+    - duration: 30       # recovery period
+      arrivalRate: 5
+  defaults:
+    headers:
+      Content-Type: "application/json"
+  variables:
+    API_KEY: "{{ $env.OPENWEATHER_BASE_URL }}"
+
+scenarios:
+  - name: "Weather API Spike Test"
+    flow:
+      - get:
+          url: "/weather"
+          qs:
+            q: "London"
+            appid: "{{ API_KEY }}"
