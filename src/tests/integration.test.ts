@@ -22,11 +22,11 @@ describe('OpenWeatherMap API - Integration Tests', () => {
     TestHelpers.validateWeatherResponse(currentWeather);
     TestHelpers.validateForecastResponse(forecast);
     
-    // Both should be for the same location
+    // Both are for the same location
     expect(currentWeather.data.name).toBe(forecast.data.city.name);
     expect(currentWeather.data.sys.country).toBe(forecast.data.city.country);
     
-    // Coordinates should match (within reasonable precision)
+    // Coordinates match (within reasonable precision)
     expect(currentWeather.data.coord.lat).toBeCloseTo(forecast.data.city.coord.lat, 1);
     expect(currentWeather.data.coord.lon).toBeCloseTo(forecast.data.city.coord.lon, 1);
   });
@@ -43,7 +43,7 @@ describe('OpenWeatherMap API - Integration Tests', () => {
     TestHelpers.validateWeatherResponse(weatherByCoords);
     TestHelpers.validateWeatherResponse(weatherByCity);
     
-    // Should be for the same general location
+    // The same for general location
     expect(weatherByCoords.data.sys.country).toBe(weatherByCity.data.sys.country);
     expect(weatherByCoords.data.coord.lat).toBeCloseTo(weatherByCity.data.coord.lat, 1);
     expect(weatherByCoords.data.coord.lon).toBeCloseTo(weatherByCity.data.coord.lon, 1);
@@ -60,7 +60,7 @@ describe('OpenWeatherMap API - Integration Tests', () => {
       TestHelpers.validateWeatherResponse(response);
     });
     
-    // All responses should be for the same location
+    // All responses are for the same location
     const firstResponse = responses[0].data;
     responses.slice(1).forEach(response => {
       expect(response.data.id).toBe(firstResponse.id);

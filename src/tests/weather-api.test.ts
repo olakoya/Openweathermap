@@ -6,7 +6,7 @@ import { getWeather } from '../utils/api-client';
 describe('Weather API', () => {
   test('should fetch current weather for a valid city', async () => {
   const response = await getWeather('London'); 
-  const data = response.data;   // ✅ unwrap actual weather JSON
+  const data = response.data;   // unwrap actual weather JSON
 
   expect(data).toHaveProperty('main');
   expect(data).toHaveProperty('weather');
