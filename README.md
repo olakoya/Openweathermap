@@ -29,21 +29,23 @@ This project demonstrates:
 
 ## Project Structure
 
-*perf/ # Performance test files (Artillery)*
-api-load-test.yml
-api-spike-test.yml
-api-smoke-test.yml
+```text
+perf/                     # Performance test files (Artillery)
+  ├── api-load-test.yml
+  ├── api-spike-test.yml
+  └── api-smoke-test.yml
 
-*src/ # API service and helper scripts*
-services/
-weather-service.ts
-utils/
-api-client.ts
-logger.ts
+src/                      # API service and helper scripts
+  ├── services/
+  │     └── weather-service.ts
+  └── utils/
+        ├── api-client.ts
+        ├── logger.ts
+        └── test-helpers.ts
 
-*.env # Environment variables*
-README.md # Project documentation
-package.json # Node.js dependencies and scripts
+.env                      # Environment variables
+README.md                 # Documentation
+package.json              # Dependencies and scripts
 
 
 ---
@@ -64,35 +66,36 @@ package.json # Node.js dependencies and scripts
 git clone <repository-url>
 cd openweathermap-api-tests
 
-> 2. Install dependencies:
+2. Install dependencies:
 
 npm install
 
-> 3. Create a .env file in the root:
+3. Create a .env file in the root:
 
-OPENWEATHER_API_KEY=your_api_key_here
+OPENWEATHER_API_KEY=6c56beaa584b27613820fcd4f1de63ed (my registered api-key)
 OPENWEATHER_BASE_URL=https://api.openweathermap.org/data/2.5
 TEST_TIMEOUT=30000
 ENABLE_DETAILED_LOGGING=true
 
 ----
 
-**  Running Tests **
-Functional & Integration Tests (Jest + TypeScript)**
+## Running Tests
+
+1. Functional & Integration Tests (Jest + TypeScript)**
 
 npm test
 npm run test:coverage    # With coverage reports
 npm run test:ci          # For CI/CD pipelines
 
-> ** Performance Tests (Artillery) **
+2. Performance Tests (Artillery)
 
 npx dotenv -e .env -- npx artillery run perf/api-load-test.yml
 npx dotenv -e .env -- npx artillery run perf/api-spike-test.yml
 npx dotenv -e .env -- npx artillery run perf/api-smoke-test.yml
 
 ----
->
-** Reporting **
+
+## Reporting
 
 HTML Reports: ./test-results/test-report.html
 
@@ -102,98 +105,114 @@ JUnit XML Reports: ./test-results/junit.xml (for CI/CD)
 
 ---
 
-** Test Scenarios **
+## Test Scenarios
 
-Functional Tests
+1. Functional Tests
 
-PASS Get current weather by city name, coordinates, and city ID
+- **Happy Path: Get current weather by city name, coordinates, and city ID
 
-PASS Validate response data types and temperature ranges
+- **Happy Path: Validate response data types and temperature ranges
 
-FAIL Handle invalid cities, coordinates, and parameters
+- **Negative Path: Handle invalid cities, coordinates, and parameters
 
-- Edge cases (boundary coordinates, special characters)
+- **Edge cases (boundary coordinates, special characters)
 
-Forecast API
+2. Forecast API
 
-PASS 5-day forecast by city or coordinates
+- **Happy Path: Get 5-day forecast by city or coordinates
 
-PASS Validate time intervals and units
+- **Happy Path: Validate time intervals and units
 
-FAIL Invalid inputs handled gracefully
+- **Negative Path: Invalid inputs handled gracefully
 
-Performance Tests
+3. Performance Tests
 
-⚡ Load and spike testing
+- **Load and spike testing
 
-⚡ Validate response time (< 2s)
+- **Validate response time (< 2s)
 
-⚡ Monitor errors and throughput
+- **Monitor errors and throughput
 
-Integration Tests
+4. Integration Tests
 
-🔗 Compare current weather vs forecast consistency
+- **Compare current weather vs forecast consistency
 
-🔗 Multiple methods same location validations
-
----
-
-** CI/CD Integration **
-
-GitHub Actions workflow included (.github/workflows/ci.yml)
-
-Multi-node testing for Node.js 18 & 20
-
-Linting, tests, performance tests, and artifact reporting
-
-Requires repository secret: OPENWEATHER_API_KEY
+- **Multiple methods same location validations
 
 ---
 
-** Troubleshooting **
+## CI/CD Integration
 
-Invalid API Key / Missing Env Variable: Ensure .env has OPENWEATHER_API_KEY
+- **GitHub Actions workflow included (.github/workflows/ci.yml)
 
-Rate Limiting (HTTP 429): Reduce requests or upgrade plan
+- **Multi-node testing for Node.js 18 & 20
 
-Invalid Location (HTTP 404): Verify city name and country code
+- **Linting, tests, performance tests, and artifact reporting
 
-Timeouts: Increase TEST_TIMEOUT in .env
-
----
-
-** Performance Considerations **
-
-Free-tier rate limit: 60 requests/min
-
-Typical response: < 2s
-
-Concurrent requests limited by rate limits
+- **Requires repository secret: OPENWEATHER_API_KEY
 
 ---
 
-** Contributing **
+## Troubleshooting
 
-Fork the repository
+- **Invalid API Key / Missing Env Variable: Ensure .env has OPENWEATHER_API_KEY
 
-Add/modify tests or utilities
+- **Rate Limiting (HTTP 429): Reduce requests or upgrade plan
 
-Submit a pull request after validation
+- **Invalid Location (HTTP 404): Verify city name and country code
+
+- **Timeouts: Increase TEST_TIMEOUT in .env
 
 ---
 
-** License **
+## Performance Considerations
+
+- **Free-tier rate limit: 60 requests/min
+
+- **Typical response: < 2s
+
+- **Concurrent requests limited by rate limits
+
+---
+
+## Contributing
+
+- **Fork the repository
+
+- **Add/modify tests or utilities
+
+- **Submit a pull request after validation
+
+---
+
+## License
 
 MIT License
 
+---
 
-
-** Summary for Application **
+## Summary for Application
 
 Role: Backend QA Engineer
 
-Skills Demonstrated: API testing, load testing, TypeScript automation, CI/CD integration, environment management, robust reporting
+1. Skills Demonstrated:
 
-Project Deliverables: Functional, integration, performance tests; configurable environment; clean architecture; professional reports
+- **API functional & performance testing
 
-Author: OLA KOYA
+- **TypeScript automation & best practices
+
+- **CI/CD integration with GitHub Actions
+
+- **Environment & config management
+
+- **Professional test architecture & reporting
+
+2. Deliverables:
+
+- **Functional, integration, and performance tests
+
+- **Configurable .env environment
+
+- **CI-ready pipelines and structured reporting
+
+*Author: OLA KOYA*
