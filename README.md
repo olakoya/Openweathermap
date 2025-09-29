@@ -63,7 +63,7 @@ package.json              # Dependencies and scripts
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/olakoya/Openweathermap.git>
 cd openweathermap-api-tests
 
 2. Install dependencies:
@@ -81,7 +81,7 @@ ENABLE_DETAILED_LOGGING=true
 
 ## Running Tests
 
-1. Functional & Integration Tests (Jest + TypeScript)**
+1. Functional & Integration Tests (Jest + TypeScript)
 
 npm test
 npm run test:coverage    # With coverage reports
@@ -89,8 +89,13 @@ npm run test:ci          # For CI/CD pipelines
 
 2. Performance Tests (Artillery)
 
+- Load Testing:
 npx dotenv -e .env -- npx artillery run perf/api-load-test.yml
+
+- Spike Testing:
 npx dotenv -e .env -- npx artillery run perf/api-spike-test.yml
+
+- Smoke Testing:
 npx dotenv -e .env -- npx artillery run perf/api-smoke-test.yml
 
 ----
@@ -109,79 +114,79 @@ JUnit XML Reports: ./test-results/junit.xml (for CI/CD)
 
 1. Functional Tests
 
-- **Happy Path: Get current weather by city name, coordinates, and city ID
+- Positive Path: Get current weather by city name, coordinates, and city ID
 
-- **Happy Path: Validate response data types and temperature ranges
+- Positive Path: Validate response data types and temperature ranges
 
-- **Negative Path: Handle invalid cities, coordinates, and parameters
+- Negative Path: Handle invalid cities, coordinates, and parameters
 
-- **Edge cases (boundary coordinates, special characters)
+- Edge cases (boundary coordinates, special characters)
 
 2. Forecast API
 
-- **Happy Path: Get 5-day forecast by city or coordinates
+- Positive Path: Get 5-day forecast by city or coordinates
 
-- **Happy Path: Validate time intervals and units
+- Positive Path: Validate time intervals and units
 
-- **Negative Path: Invalid inputs handled gracefully
+- Negative Path: Invalid inputs handled gracefully
 
 3. Performance Tests
 
-- **Load and spike testing
+- Load and spike testing
 
-- **Validate response time (< 2s)
+- Validate response time (< 2s)
 
-- **Monitor errors and throughput
+- Monitor errors and throughput
 
 4. Integration Tests
 
-- **Compare current weather vs forecast consistency
+- Compare current weather vs forecast consistency
 
-- **Multiple methods same location validations
+- Multiple methods same location validations
 
 ---
 
 ## CI/CD Integration
 
-- **GitHub Actions workflow included (.github/workflows/ci.yml)
+- GitHub Actions workflow included (.github/workflows/ci.yml)
 
-- **Multi-node testing for Node.js 18 & 20
+- Multi-node testing for Node.js 18 & 20
 
-- **Linting, tests, performance tests, and artifact reporting
+- Linting, tests, performance tests, and artifact reporting
 
-- **Requires repository secret: OPENWEATHER_API_KEY
+- Requires repository secret: OPENWEATHER_API_KEY
 
 ---
 
 ## Troubleshooting
 
-- **Invalid API Key / Missing Env Variable: Ensure .env has OPENWEATHER_API_KEY
+- Invalid API Key / Missing Env Variable: Ensure .env has OPENWEATHER_API_KEY
 
-- **Rate Limiting (HTTP 429): Reduce requests or upgrade plan
+- Rate Limiting (HTTP 429): Reduce requests or upgrade plan
 
-- **Invalid Location (HTTP 404): Verify city name and country code
+- Invalid Location (HTTP 404): Verify city name and country code
 
-- **Timeouts: Increase TEST_TIMEOUT in .env
+- Timeouts: Increase TEST_TIMEOUT in .env
 
 ---
 
 ## Performance Considerations
 
-- **Free-tier rate limit: 60 requests/min
+- Free-tier rate limit: 60 requests/min
 
-- **Typical response: < 2s
+- Typical response: < 2s
 
-- **Concurrent requests limited by rate limits
+- Concurrent requests limited by rate limits
 
 ---
 
 ## Contributing
 
-- **Fork the repository
+- Fork the repository
 
-- **Add/modify tests or utilities
+- Add/modify tests or utilities
 
-- **Submit a pull request after validation
+- Submit a pull request after validation
 
 ---
 
@@ -197,22 +202,22 @@ Role: Backend QA Engineer
 
 1. Skills Demonstrated:
 
-- **API functional & performance testing
+- API functional & performance testing
 
-- **TypeScript automation & best practices
+- TypeScript automation & best practices
 
-- **CI/CD integration with GitHub Actions
+- CI/CD integration with GitHub Actions
 
-- **Environment & config management
+- Environment & config management
 
-- **Professional test architecture & reporting
+- Professional test architecture & reporting
 
 2. Deliverables:
 
-- **Functional, integration, and performance tests
+- Functional, integration, and performance tests
 
-- **Configurable .env environment
+- Configurable .env environment
 
-- **CI-ready pipelines and structured reporting
+- CI-ready pipelines and structured reporting
 
-*Author: OLA KOYA*
+Author: OLA KOYA
