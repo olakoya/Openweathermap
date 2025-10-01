@@ -1,23 +1,22 @@
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 import { TestLogger } from '../src/utils/logger';
 
-// Load environment variables from .env file
-dotenv.config();
+config(); // load .env
 
-// Global Jest setup hooks
-beforeAll(() => {
-  // Log the start of the entire test suite
-  TestLogger.info('OpenWeatherMap API Test Suite Started');
+// Ensure API key is present
+if (!process.env.OPENWEATHERMAP_API_KEY || process.env.OPENWEATHERMAP_API_KEY.trim() === '') {
+  TestLogger.error(
+    'OPENWEATHERMAP_API_KEY is missing. Skipping all API tests. Please set it in your .env file.'
+  );
 
-  // Validate required environment variables
-  if (!process.env.OPENWEATHER_API_KEY) {
-    throw new Error(
-      'Missing required environment variable: OPENWEATHER_API_KEY'
-    );
-  }
-});
+  // Tell Jest to skip all tests in this run
+  beforeAll(() => {
+    pending('Skipping tests: No OpenWeatherMap API key found in .env');
+  });
 
-afterAll(() => {
-  // Log the completion of the entire test suite
-  TestLogger.info('OpenWeatherMap API Test Suite Completed');
-});
+  test.skip('API tests skipped due to missing API key', () => {
+    expect(true).toBe(true);
+  });
+} else {
+  TestLogger.info('OpenWeatherMap API key detected, tests will run.');
+}

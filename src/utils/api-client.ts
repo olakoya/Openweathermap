@@ -7,7 +7,12 @@ export class ApiClient {
   private client: AxiosInstance;
 
   constructor() {
-    // Replace the old axios.create() with this:
+    if (!testConfig.apiKey || testConfig.apiKey.trim() === '') {
+      throw new Error(
+        'OpenWeatherMap API key is missing. Please check your .env file and ensure OPENWEATHERMAP_API_KEY is set.'
+      );
+    }
+
     this.client = axios.create({
       baseURL: testConfig.baseUrl,
       timeout: testConfig.timeout,
@@ -15,16 +20,17 @@ export class ApiClient {
         'Content-Type': 'application/json',
         'User-Agent': 'OpenWeatherMap-Test-Suite/1.0',
       },
-      params: { appid: testConfig.apiKey } // <-- add default API key here
+      params: { appid: testConfig.apiKey }, // default API key
     });
 
     this.setupInterceptors();
+    TestLogger.info(`API Client initialized with key: ${testConfig.apiKey.substring(0, 5)}***`);
   }
 
   private setupInterceptors(): void {
     this.client.interceptors.request.use(
       (config) => {
-        TestLogger.debug(`Making request to: ${config.method?.toUpperCase()} ${config.url}`);
+        TestLogger.debug(`➡️ Request: ${config.method?.toUpperCase()} ${config.url}`);
         return config;
       },
       (error) => {
@@ -35,11 +41,11 @@ export class ApiClient {
 
     this.client.interceptors.response.use(
       (response: AxiosResponse) => {
-        TestLogger.debug(`Response received: ${response.status} from ${response.config.url}`);
+        TestLogger.debug(`⬅️ Response: ${response.status} from ${response.config.url}`);
         return response;
       },
       (error: AxiosError) => {
-        TestLogger.error(`Response error: ${error.response?.status} - ${error.message}`);
+        TestLogger.error(`Response error: ${error.response?.status} - ${error.message}`, error);
         return Promise.reject(error);
       }
     );
@@ -50,11 +56,9 @@ export class ApiClient {
       ...params,
       appid: testConfig.apiKey,
     };
-
     return this.client.get<T>(endpoint, { params: requestParams });
   }
 
-  // Convenience methods
   async getWeather(
     cityOrLat: string | number,
     countryOrLon?: string | number,
@@ -63,10 +67,8 @@ export class ApiClient {
     let params: Record<string, any> = { units };
 
     if (typeof cityOrLat === 'string') {
-      // City, optional country
       params.q = countryOrLon ? `${cityOrLat},${countryOrLon}` : cityOrLat;
     } else {
-      // Coordinates
       params.lat = cityOrLat;
       params.lon = countryOrLon;
     }
@@ -92,7 +94,7 @@ export class ApiClient {
   }
 }
 
-// Export single instance functions for easier use in tests
+// Export single instance functions for tests
 const apiClient = new ApiClient();
 
 export const getWeather = (

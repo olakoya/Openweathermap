@@ -1,15 +1,14 @@
-import type { Config } from 'jest';
+require('dotenv').config();
 
-const config: Config = {
-  preset: 'ts-jest',                     // Use ts-jest to compile TypeScript
-  testEnvironment: 'node',               // Run tests in Node.js
-  roots: ['<rootDir>/src', '<rootDir>/tests'], // Look for tests in both src/ and tests/
-  testMatch: [
-  '**/*.test.ts',
-  '**/*.spec.ts'
-],
+/** @type {import('jest').Config} */
+module.exports = {
+  testPathIgnorePatterns: ["/node_modules/", "/dist/"],
+  preset: 'ts-jest',                       // Use ts-jest for TypeScript
+  testEnvironment: 'node',                 // Node environment for API tests
+  roots: ['<rootDir>/src', '<rootDir>/tests'], // Source and test folders
+  testMatch: ['**/*.test.ts', '**/*.spec.ts'], // Match test files
   transform: {
-    '^.+\\.ts$': 'ts-jest',              // Compile TypeScript files
+    '^.+\\.ts$': 'ts-jest',                // Transform TS files with ts-jest
   },
   collectCoverageFrom: [
     'src/**/*.ts',
@@ -19,7 +18,7 @@ const config: Config = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html', 'json'],
-  setupFilesAfterEnv: ['<rootDir>/tests/test-setup.ts'], // Global setup
+  setupFilesAfterEnv: ['<rootDir>/tests/test-setup.ts'],
   reporters: [
     'default',
     ['jest-html-reporters', {
@@ -27,14 +26,14 @@ const config: Config = {
       filename: 'test-report.html',
       expand: true,
       hideIcon: false,
-      pageTitle: 'OpenWeatherMap API Test Results'
+      pageTitle: 'OpenWeatherMap API Test Results',
     }],
     ['jest-junit', {
       outputDirectory: './test-results',
-      outputName: 'junit.xml'
+      outputName: 'junit.xml',
     }]
   ],
-  testTimeout: 30000
+  testTimeout: 30000,                      // 30s per test timeout
+  maxWorkers: 1,                            // Run tests sequentially to avoid circular JSON errors
+  verbose: true,                            // Show detailed test info in console
 };
-
-export default config;
