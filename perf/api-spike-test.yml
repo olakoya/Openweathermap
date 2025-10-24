@@ -2,20 +2,20 @@
 config:
   target: "{{ $env.OPENWEATHER_BASE_URL }}"
   phases:
-    - duration: 10       # warm-up period
+    - duration: 10 # warm-up period
       arrivalRate: 1
-    - duration: 20       # spike period
+    - duration: 20 # spike period
       arrivalRate: 50
-    - duration: 30       # recovery period
+    - duration: 30 # recovery period
       arrivalRate: 5
   defaults:
     headers:
       Content-Type: "application/json"
   variables:
-    API_KEY: "{{ $env.OPENWEATHER_BASE_URL }}"
+      API_KEY: "{{ $env.OPENWEATHERMAP_API_KEY }}"
 
 scenarios:
-  - name: "Weather API Spike Test"
+-   name: "Weather API Spike Test"
     flow:
       - get:
           url: "/weather"
