@@ -6,7 +6,7 @@ module.exports = {
     project: './tsconfig.json'
   },
   extends: [
-    '@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   rules: {
     '@typescript-eslint/no-explicit-any': 'warn',
