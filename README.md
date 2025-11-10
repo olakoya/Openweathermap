@@ -2,6 +2,9 @@
 
 A professional test automation framework for OpenWeatherMap API, designed for robust backend QA validation. Includes functional, integration, and performance tests, environment configuration, and reporting.
 
+Robot Framework is an open-source automation framework primarily used for test automation (especially acceptance testing and acceptance test-driven development — ATDD).
+
+It’s keyword-driven, meaning you write your tests using plain English-like keywords, rather than complex programming syntax. This makes it easy to read, understand, and maintain, even by non-programmers.
 ---
 
 ## Overview
@@ -24,7 +27,7 @@ This project demonstrates:
 - **Environment Configurable**: `.env` file for API keys and base URL  
 - **Reporting**: Console output, HTML, and JUnit reports for CI pipelines  
 - **Clean Architecture**: Service layer, reusable utilities, and structured test files  
-
+--------
 ---
 
 ## Project Structure
